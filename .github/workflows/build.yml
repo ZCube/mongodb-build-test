@@ -8,7 +8,8 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: >-
       ${{ !contains(github.event.head_commit.message, '[ci skip]') &&
       !contains(github.event.head_commit.message, '[skip ci]')
@@ -20,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-         - TARGETARCH: "amd64"
+         # - TARGETARCH: "amd64"
          - TARGETARCH: "arm64"
     steps:
       - name: Checkout

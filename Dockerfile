@@ -3,10 +3,11 @@ from debian:bullseye
 RUN apt update
 RUN apt install -y build-essential libcurl4-openssl-dev liblzma-dev git python3 python3-pip git-lfs python-dev-is-python3 libssl-dev
 RUN apt install -y gcc g++
-RUN cd /tmp \
+RUN mkdir -p /opt/work \
+ && cd /opt/work \
  && git clone -b r5.3.2 --depth=1 https://github.com/mongodb/mongo
 
-RUN cd /tmp/mongo \
+RUN cd /opt/work/mongo \
  && python3 -m pip install -r etc/pip/compile-requirements.txt
 
 # raspberrypi 4 :fp asimd evtstrm crc32 cpuid
@@ -14,8 +15,9 @@ RUN cd /tmp/mongo \
 # apple m1 :fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma
 #           lrcpc dcpop sha3 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp f
 #           lagm2 frint
+# odroid m1 : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp
 
-RUN cd /tmp/mongo \
+RUN cd /opt/work/mongo \
  && export flags='' \
  && case "$(dpkg --print-architecture)" in \
 		amd64) flags='' ;; \

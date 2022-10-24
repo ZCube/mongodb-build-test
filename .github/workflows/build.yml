@@ -16,6 +16,12 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+         - TARGETARCH: "amd64"
+         - TARGETARCH: "arm64"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -44,7 +50,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
           tags: |
-            type=raw,value=latest
+            type=raw,value=${{ matrix.TARGETARCH }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
@@ -52,4 +58,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/${{ matrix.TARGETARCH }}

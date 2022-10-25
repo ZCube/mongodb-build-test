@@ -53,16 +53,16 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
           tags: |
             type=raw,value=builder
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          driver: docker
-          file: Dockerfile.builder
-          push: true
-          tags: ${{ steps.meta-builder.outputs.tags }}-${{ matrix.TARGETARCH }}
-          labels: ${{ steps.meta-builder.outputs.labels }}
-          platforms: linux/${{ matrix.TARGETARCH }}
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     driver: docker
+      #     file: Dockerfile.builder
+      #     push: true
+      #     tags: ${{ steps.meta-builder.outputs.tags }}-${{ matrix.TARGETARCH }}
+      #     labels: ${{ steps.meta-builder.outputs.labels }}
+      #     platforms: linux/${{ matrix.TARGETARCH }}
       - name: Prepare build cache
         shell: bash
         run: |

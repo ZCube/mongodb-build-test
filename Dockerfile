@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1.3-labs
-ARG TARGETARCH
 from ghcr.io/zcube/mongodb-build-test:builder-${TARGETARCH}
 
 ARG MONGO_MAJOR_VERSION=v5

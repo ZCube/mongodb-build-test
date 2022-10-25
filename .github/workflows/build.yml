@@ -47,7 +47,7 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: meta-builder
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
@@ -60,8 +60,8 @@ jobs:
           driver: docker
           file: Dockerfile.builder
           push: true
-          tags: ${{ steps.meta.outputs.tags }}-${{ matrix.TARGETARCH }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-builder.outputs.tags }}-${{ matrix.TARGETARCH }}
+          labels: ${{ steps.meta-builder.outputs.labels }}
           platforms: linux/${{ matrix.TARGETARCH }}
       - name: Prepare build cache
         shell: bash

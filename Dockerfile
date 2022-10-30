@@ -31,4 +31,4 @@ RUN --mount=type=cache,id=mongo-${MONGO_MAJOR_VERSION},target=/opt/work/,sharing
 		arm64) flags='CCFLAGS="-march=armv8-a+fp+crc+simd" CFLAGS="-march=armv8-a+fp+crc+simd"' ;; \
 	esac \
  && echo ${flags} \
- && python3 buildscripts/scons.py ${flags} install-all
+ && python3 buildscripts/scons.py ${flags} install-servers
